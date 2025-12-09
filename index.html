@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIWEB Store - La Boutique Officielle</title>
+    <style>
+        :root {
+            --primary-blue: #4A90D9;
+            --accent-orange: #E07B53;
+            --accent-yellow: #D4B84A;
+            --accent-green: #7CB342;
+            --bg-light: #ffffff;
+            --bg-dark: #2D3142;
+            --text-light: #333333;
+            --text-dark: #f0f0f0;
+            --card-light: #f8f9fa;
+            --card-dark: #3d4255;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1d2e 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.3);
+        }
+
+        .logo-ascii {
+            font-size: 0.6rem;
+            line-height: 1;
+            white-space: pre;
+            color: var(--primary-blue);
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-blue);
+        }
+
+        .cart-btn {
+            background: var(--primary-blue);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cart-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(74, 144, 217, 0.4);
+        }
+
+        .cart-count {
+            background: var(--accent-orange);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--primary-blue);
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a1d2e 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-tagline {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .hero-tagline span {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .hero-tagline span:nth-child(1) { background: var(--accent-orange); }
+        .hero-tagline span:nth-child(2) { background: var(--accent-yellow); color: #333; }
+        .hero-tagline span:nth-child(3) { background: var(--accent-green); }
+
+        /* Promo Banner */
+        .promo-banner {
+            background: var(--accent-orange);
+            color: white;
+            text-align: center;
+            padding: 0.8rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        /* Products Section */
+        .products-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0.7;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-light);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        body.dark-mode .product-card {
+            background: var(--card-dark);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--accent-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .product-badge.new {
+            background: var(--accent-green);
+        }
+
+        .product-badge.hot {
+            background: #e74c3c;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        .product-description {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--accent-orange);
+            margin-bottom: 1rem;
+        }
+
+        .product-price .original {
+            font-size: 1rem;
+            text-decoration: line-through;
+            opacity: 0.5;
+            margin-left: 0.5rem;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart:hover {
+            background: #3a7bc8;
+            transform: scale(1.02);
+        }
+
+        .add-to-cart.added {
+            background: var(--accent-green);
+        }
+
+        /* Cart Sidebar */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 2000;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            max-width: 100%;
+            height: 100%;
+            background: var(--bg-light);
+            transition: right 0.3s;
+            z-index: 2001;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode .cart-sidebar {
+            background: var(--bg-dark);
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            color: var(--primary-blue);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+
+        .cart-item-price {
+            color: var(--accent-orange);
+            font-weight: bold;
+        }
+
+        .cart-item-remove {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .cart-total span:last-child {
+            color: var(--accent-orange);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #689f38;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 3rem;
+            opacity: 0.6;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--card-light);
+            padding: 3rem 2rem;
+        }
+
+        body.dark-mode .features {
+            background: var(--card-dark);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .feature-item {
+            padding: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            color: var(--primary-blue);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--primary-blue);
+        }
+
+        .footer-disclaimer {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 3000;
+            font-weight: bold;
+        }
+
+        .notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+
+            nav {
+                gap: 0.8rem;
+            }
+
+            .logo-ascii {
+                display: none;
+            }
+        }
+
+        /* Easter egg modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 5000;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            margin: 1rem;
+        }
+
+        body.dark-mode .modal-content {
+            background: var(--bg-dark);
+        }
+
+        .modal-content h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+        }
+
+        .modal-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <pre class="logo-ascii">
+███╗   ███╗██╗██╗    ██╗███████╗██████╗ 
+████╗ ████║██║██║    ██║██╔════╝██╔══██╗
+██╔████╔██║██║██║ █╗ ██║█████╗  ██████╔╝
+██║╚██╔╝██║██║██║███╗██║██╔══╝  ██╔══██╗
+██║ ╚═╝ ██║██║╚███╔███╔╝███████╗██████╔╝
+╚═╝     ╚═╝╚═╝ ╚══╝╚══╝ ╚══════╝╚═════╝
+
+</pre>
+                <span>MIWEB Store</span>
+            </div>
+            <nav>
+                <a href="#products">Produits</a>
+                <a href="#about">À propos</a>
+                <button class="theme-toggle" onclick="toggleTheme()" title="Changer de thème">🌓</button>
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 Panier <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Promo Banner -->
+    <div class="promo-banner">
+        🎉 OFFRE EXCEPTIONNELLE : 1 produit livré pour 1 produit acheté
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>🚀 La Collection MIWEB</h1>
+        <p>Portez fièrement les couleurs de la Mission Ingénierie du Web. Des produits d'exception pour des agents d'exception.</p>
+        <div class="hero-tagline">
+            <span>100% Responsive (du S au XXL)</span>
+            <span>Conforme RGAA (contrastes respectés)</span>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">Nos Produits Exclusifs</h2>
+        <p class="section-subtitle">Chaque article a été debuggé avec amour par nos équipes</p>
+
+        <div class="products-grid">
+            <!-- T-Shirt -->
+            <div class="product-card">
+                <span class="product-badge hot">🔥 Best-seller</span>
+                <img src="tshirt.png" alt="T-Shirt MIWEB" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">T-Shirt "UX"</h3>
+                    <p class="product-description">Le t-shirt officiel avec l'organigramme complet de la MIWEB. Impressionnez vos collègues en réunion !</p>
+                    <div class="product-price">12,99€ <span class="original">14,99€</span></div>
+                    <button class="add-to-cart" onclick="addToCart('tshirt', 'T-Shirt Full Stack', 29.99, 'tshirt.png')">
+                        🛒 Ajouter au panier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Sweatshirt -->
+            <div class="product-card">
+                <span class="product-badge new">✨ Nouveau</span>
+                <img src="sweatshirt.png" alt="Sweatshirt MIWEB" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Sweatshirt "A11Y"</h3>
+                    <p class="product-description">Restez au chaud même dans les bureaux de Vauban. Idéal pour les bug en prod le vendredi soir.</p>
+                    <div class="product-price">34,99€ <span class="original">54,99€</span></div>
+                    <button class="add-to-cart" onclick="addToCart('sweatshirt', 'Sweatshirt Commit & Push', 49.99, 'sweatshirt.png')">
+                        🛒 Ajouter au panier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Casquette -->
+            <div class="product-card">
+                <img src="cap.png" alt="Casquette MIWEB" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Casquette "Headless"</h3>
+                    <p class="product-description">La casquette offielle pour ne pas perdre la tête, bodée avec des pixels d'amour.</p>
+                    <div class="product-price">29,99€ <span class="original">49,99€</span></div>
+                    <button class="add-to-cart" onclick="addToCart('cap', 'Casquette Headless', 19.99, 'cap.png')">
+                        🛒 Ajouter au panier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mug -->
+            <div class="product-card">
+                <span class="product-badge">☕ Essentiel</span>
+                <img src="mug.png" alt="Mug MIWEB" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Mug "Tea or coffee"</h3>
+                    <p class="product-description">Résiste aux chocs et aux meetings qui auraient pu être des emails.</p>
+                    <div class="product-price">14,99€ <span class="original">29,99€</span></div>
+                    <button class="add-to-cart" onclick="addToCart('mug', 'Mug npm install coffee', 14.99, 'mug.png')">
+                        🛒 Ajouter au panier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Serviette -->
+            <div class="product-card">
+                <img src="towel.png" alt="Serviette MIWEB" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Serviette "Au sec"</h3>
+                    <p class="product-description">Utile pour se sécher après avoir purgé ses mails. Aussi utile pour la plage.</p>
+                    <div class="product-price">24,99€ <span class="original">44,99€</span></div>
+                    <button class="add-to-cart" onclick="addToCart('towel', 'Serviette Clean Code', 24.99, 'towel.png')">
+                        🛒 Ajouter au panier
+                    </button>
+                </div>
+            </div>
+
+            <!-- Plaid -->
+            <div class="product-card">
+                <span class="product-badge new">🆕 Édition limitée</span>
+                <img src="plaid.png" alt="Plaid MIWEB" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-name">Plaid "Cozy Bercy"</h3>
+                    <p class="product-description">Le plaid ultime pour tchapper depuis votre canapé. Chaque fil représente une ligne de code en production.</p>
+                    <div class="product-price">39,99€ <span class="original">59,99€</span></div>
+                    <button class="add-to-cart" onclick="addToCart('plaid', 'Plaid Cozy Deployment', 39.99, 'plaid.png')">
+                        🛒 Ajouter au panier
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="about">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🚀</div>
+                <h3 class="feature-title">Livraison Express</h3>
+                <p>Déployé en continu directement chez vous (délai estimé : entre 3 et 47 sprints)</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💯</div>
+                <h3 class="feature-title">Qualité Premium</h3>
+                <p>Chaque produit a été validé en recette <br>(coverage : 12%)</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🔄</div>
+                <h3 class="feature-title">Retours Faciles</h3>
+                <p>Satisfait ou revert (git revert --hard votre commande)</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🛡️</div>
+                <h3 class="feature-title">Paiement Sécurisé</h3>
+                <p>Vos données sont chiffrées en Base64 (c'est presque pareil)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">MIWEB Store</div>
+            <p>Mission Ingénierie du Web - La boutique qui n'existe pas vraiment</p>
+            <div class="footer-links">
+                <a href="#" onclick="showEasterEgg()">Mentions Légales (en Comic Sans)</a>
+                <a href="#" onclick="showEasterEgg()">Contactez-nous (réponse sous 200 sprints)</a>
+                <a href="#" onclick="showEasterEgg()">FAQ (Foire Aux Quotidiens bugs)</a>
+            </div>
+            <p class="footer-disclaimer">
+                ⚠️ Ce site est une blague. Aucun produit n'est réellement en vente.
+                Toute ressemblance avec un vrai e-commerce serait purement accidentelle et probablement due à un bug.
+                <br><br>
+                © 2025 MIWEB - Tous droits réservés (sauf le droit de coder le vendredi après-midi)
+                <br>
+                Version 1.0.0-alpha-beta-gamma-delta-pas-encore-fini
+            </p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>🛒 Votre Panier</h2>
+            <button class="close-cart" onclick="toggleCart()">✕</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <p>Votre panier est vide...</p>
+                <p>Comme notre backlog après un sprint planning optimiste 😅</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total :</span>
+                <span id="cartTotal">0,00€</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">
+                🚀 Passer commande (lol)
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        ✅ Produit ajouté au panier !
+    </div>
+
+    <!-- Easter Egg Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h2>🎉 Bravo !</h2>
+            <p>Vous avez trouvé un lien ! Malheureusement, cette page n'existe pas encore car notre Product Owner a changé les specs 47 fois.</p>
+            <p>Revenez dans 3 à 5 sprints... ou jamais. 🤷</p>
+            <button class="modal-close" onclick="closeModal()">J'accepte mon destin</button>
+        </div>
+    </div>
+
+    <script>
+        // Cart State
+        let cart = [];
+
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Load saved theme
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Cart Functions
+        function toggleCart() {
+            document.querySelector('.cart-overlay').classList.toggle('active');
+            document.getElementById('cartSidebar').classList.toggle('active');
+        }
+
+        function addToCart(id, name, price, image) {
+            const existingItem = cart.find(item => item.id === id);
+
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ id, name, price, image, quantity: 1 });
+            }
+
+            updateCart();
+            showNotification('✅ ' + name + ' ajouté au panier !');
+
+            // Button animation
+            event.target.classList.add('added');
+            event.target.innerHTML = '✅ Ajouté !';
+            setTimeout(() => {
+                event.target.classList.remove('added');
+                event.target.innerHTML = '🛒 Ajouter au panier';
+            }, 1500);
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartTotal = document.getElementById('cartTotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartCount.textContent = totalItems;
+            cartTotal.textContent = totalPrice.toFixed(2).replace('.', ',') + '€';
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="empty-cart">
+                        <p>Votre panier est vide...</p>
+                        <p>Comme notre backlog après un sprint planning optimiste 😅</p>
+                    </div>
+                `;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">${item.price.toFixed(2).replace('.', ',')}€ × ${item.quantity}</div>
+                        </div>
+                        <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">🗑️</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 2500);
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('⚠️ Votre panier est vide !');
+                return;
+            }
+
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            // Fun checkout message
+            const messages = [
+                `🎉 Merci pour votre commande de ${total.toFixed(2)}€ ! (qui ne sera jamais traitée)`,
+                `💸 ${total.toFixed(2)}€ ? On va dire que c'est offert par le budget IT !`,
+                `📦 Commande envoyée ! Livraison prévue : jamais (comme ce ticket JIRA)`,
+                `✨ Félicitations ! Vous êtes notre 1 000 000ème client ! (non en vrai non)`,
+                `🚀 Déploiement de votre commande en prod... 503 Service Unavailable`
+            ];
+
+            alert(messages[Math.floor(Math.random() * messages.length)]);
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        function showEasterEgg() {
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal on escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                if (document.getElementById('cartSidebar').classList.contains('active')) {
+                    toggleCart();
+                }
+            }
+        });
+
+        // Konami code easter egg
+        let konamiCode = [];
+        const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+
+        document.addEventListener('keydown', (e) => {
+            konamiCode.push(e.key);
+            konamiCode = konamiCode.slice(-10);
+
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                document.body.style.animation = 'shake 0.5s';
+                showNotification('🎮 KONAMI CODE ACTIVÉ ! +30 vies de dev !');
+                setTimeout(() => {
+                    document.body.style.animation = '';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>
